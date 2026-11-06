@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Place For You ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+min-height:100vh;
+background:radial-gradient(circle at top,#3b1022,#080609 70%);
+color:#ffe9ee;
+font-family:'Cairo',sans-serif;
+overflow-x:hidden;
+}
+
+main{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+position:relative;
+z-index:2;
+}
+
+.card{
+width:min(650px,100%);
+padding:35px 25px;
+text-align:center;
+background:#160d13e8;
+border:1px solid #ffffff20;
+border-radius:25px;
+box-shadow:0 0 50px #b91f4930;
+animation:fade .8s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+h1{font-size:clamp(30px,7vw,48px)}
+h2{color:#ff9bb3}
+p{line-height:2}
+
+.glow{
+color:#ff9bb3;
+text-shadow:0 0 20px #ff537b;
+}
+
+button{
+font-family:inherit;
+border:none;
+padding:13px 25px;
+border-radius:30px;
+background:linear-gradient(135deg,#a21d42,#e34b70);
+color:white;
+font-size:16px;
+cursor:pointer;
+margin:8px;
+transition:.3s;
+}
+
+button:hover{transform:scale(1.05)}
+
+.hidden{display:none!important}
+
+.envelope{
+font-size:70px;
+animation:bob 2s infinite;
+}
+
+@keyframes bob{
+50%{transform:translateY(-10px)}
+}
+
+.note{
+background:#ffffff08;
+border:1px solid #ffffff20;
+border-radius:15px;
+padding:20px;
+font-size:20px;
+line-height:2;
+margin:20px 0;
+}
+
+.progress{
+height:5px;
+background:#ffffff20;
+border-radius:10px;
+margin-bottom:25px;
+overflow:hidden;
+}
+
+.progress span{
+display:block;
+height:100%;
+background:#ff6688;
+width:0;
+transition:.5s;
+}
+
+#stars{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:0;
+}
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
+animation:twinkle 3s infinite;
+}
+
+@keyframes twinkle{
+50%{opacity:.2}
+}
+
+.heart{
+position:fixed;
+bottom:-20px;
+color:#ff6688;
+animation:rise 8s linear forwards;
+pointer-events:none;
+z-index:1;
+}
+
+@keyframes rise{
+to{transform:translateY(-110vh);opacity:0}
+}
+
+#musicBtn{
+position:fixed;
+bottom:20px;
+left:20px;
+z-index:999;
+border:1px solid #ff9bb3;
+background:#240b16;
+color:white;
+border-radius:50%;
+width:50px;
+height:50px;
+padding:0;
+font-size:22px;
+box-shadow:0 0 20px #ff537b55;
+}
+
+footer{
+margin-top:25px;
+color:#b98b9b;
+font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<audio id="bgMusic" loop preload="auto">
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn" onclick="toggleMusic()" aria-label="تشغيل الموسيقى">♫</button>
+
+<main>
+
+<section class="card" id="intro">
+
+<div class="glow">A LITTLE PLACE FOR YOU ✦</div>
+
+<div class="envelope">💌</div>
+
+<h1>
+مش كل الحكايات<br>
+<span class="glow">لازم يكون ليها اسم</span>
+</h1>
+
+<p>
+مش عارف إذا كان النهارده عيد حب بالنسبالك ولا لأ…<br>
+بس أنا كان عندي سبب أعملك المكان ده.
+</p>
+
+<p>ملاحظة: ممنوع الضحك على صاحب الموقع 😶</p>
+
+<button onclick="start()">ادخلي… بس متضحكيش عليا</button>
+
+</section>
+
+<section class="card hidden" id="journey">
+
+<div class="progress">
+<span id="bar"></span>
+</div>
+
+<div class="envelope" id="emoji">✨</div>
+
+<h2 id="heading"></h2>
+
+<div class="note" id="message"></div>
+
+<p id="hint"></p>
+
+<button id="next" onclick="nextStep()">كمّلي 👀</button>
+
+</section>
+
+<section class="card hidden" id="ending">
+
+<div class="envelope">❤️</div>
+
+<h1>
+عيد حب سعيد<br>
+<span class="glow">يا أجمل صدفة</span>
+</h1>
+
+<div class="note">
+
+يمكن إحنا مش حكاية حب، ويمكن عمرنا ما نبقى كده…<br>
+
+بس مش كل شخص مميز لازم يبقى حبيب.<br>
+
+فيه ناس وجودها لوحده بيخلّي حاجات كتير أحلى،<br>
+
+وإنتِ واحدة من الناس دي.<br><br>
+
+فـ حبيت أقولك إن وجودك لطيف ومهم…<br>
+
+وخليكي دايمًا مبسوطة، حتى لو أنا مش السبب ❤️
+
+</div>
+
+<p>طب قوليلي بقى… الموقع ده يستاهل كام؟ 😌</p>
+
+<button onclick="answer('🥹 يستاهل حضن')">🥹 يستاهل حضن</button>
+
+<button onclick="answer('😂 أنت محتاج تتعالج')">
+😂 محتاج تتعالج
+</button>
+
+<button onclick="answer('❤️ مش عارفة أقول إيه')">
+❤️ مش عارفة أقول إيه
+</button>
+
+<p id="reply" class="glow"></p>
+
+<footer>
+Made with a little courage & a lot of care ✦
+</footer>
+
+</section>
+
+</main>
+
+<script>
+
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+
+function startMusic(){
+    music.volume = 0.35;
+    music.play().then(()=>{
+        musicBtn.textContent="♫";
+    }).catch(()=>{
+        musicBtn.textContent="▶";
+    });
+}
+
+function toggleMusic(){
+    if(music.paused){
+        music.play().then(()=>{
+            musicBtn.textContent="♫";
+        }).catch(()=>{
+            musicBtn.textContent="▶";
+        });
+    }else{
+        music.pause();
+        musicBtn.textContent="▶";
+    }
+}
+
+const messages = [
+
+{
+emoji:"🌷",
+title:"حاجة بحبها في وجودك",
+text:"إن الكلام معاكي بيبقى سهل… حتى لما اليوم يكون طويل وممل، فجأة ألاقي نفسي بضحك من غير سبب كبير.",
+hint:"يمكن دي حاجة بسيطة، بس التفاصيل الصغيرة بتفرق."
+},
+
+{
+emoji:"🌙",
+title:"حاجة يمكن مخدتيش بالك منها",
+text:"فيه ناس بتعدّي في اليوم عادي، وفيه ناس وجودها بيغيّر مود اليوم كله… وإنتِ من النوع التاني.",
+hint:"مش لازم أقولها بصوت عالي عشان تبقى حقيقية."
+},
+
+{
+emoji:"🫶",
+title:"رسالة مش هقولها في الحقيقة",
+text:"أنا مبسوط إننا أصحاب. ومهما الدنيا خدتنا في اتجاهات مختلفة، أتمنى تفضلي فاكرة إن فيه حد بيتمنالك الخير بجد.",
+hint:"ودي مش جملة عيد حب وخلاص."
+},
+
+{
+emoji:"🎁",
+title:"آخر حاجة…",
+text:"مش كل حاجة حلوة لازم نعرّفها أو نحطّها تحت اسم. ساعات يكفي إنها موجودة، وإننا مبسوطين بيها زي ما هي.",
+hint:"باقي خطوة واحدة بس…"
+}
+
+];
+
+let index=0;
+
+function start(){
+
+startMusic();
+
+document.getElementById("intro").classList.add("hidden");
+
+document.getElementById("journey").classList.remove("hidden");
+
+showStep();
+
+}
+
+function showStep(){
+
+let m=messages[index];
+
+document.getElementById("emoji").textContent=m.emoji;
+
+document.getElementById("heading").textContent=m.title;
+
+document.getElementById("message").textContent=m.text;
+
+document.getElementById("hint").textContent=m.hint;
+
+document.getElementById("bar").style.width=
+((index+1)/messages.length*100)+"%";
+
+document.getElementById("next").textContent=
+index===messages.length-1
+?"افتحي المفاجأة ❤️"
+:"كمّلي 👀";
+
+}
+
+function nextStep(){
+
+if(index<messages.length-1){
+
+index++;
+
+showStep();
+
+}else{
+
+document.getElementById("journey").classList.add("hidden");
+
+document.getElementById("ending").classList.remove("hidden");
+
+}
+
+}
+
+function answer(text){
+
+document.getElementById("reply").textContent=
+text+" — خلاص كده أنا كسبت عيد الحب 😂";
+
+}
+
+// النجوم
+
+for(let i=0;i<75;i++){
+
+let s=document.createElement("i");
+
+s.className="star";
+
+s.style.left=Math.random()*100+"%";
+
+s.style.top=Math.random()*100+"%";
+
+s.style.animationDelay=Math.random()*3+"s";
+
+document.getElementById("stars").appendChild(s);
+
+}
+
+// القلوب
+
+setInterval(()=>{
+
+let h=document.createElement("span");
+
+h.className="heart";
+
+h.textContent=["♥","♡","✦"][Math.floor(Math.random()*3)];
+
+h.style.left=Math.random()*100+"%";
+
+h.style.fontSize=(12+Math.random()*20)+"px";
+
+document.body.appendChild(h);
+
+setTimeout(()=>h.remove(),8000);
+
+},900);
+
+</script>
+
+</body>
+</html>
